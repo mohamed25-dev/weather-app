@@ -7,14 +7,14 @@ const express = require('express');
 
 const app = express();
 
-console.log(path.join(__dirname, 'public'));
+app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.get('', (req, res) => {
+    res.render('index');
+});
 
 const address = process.argv[2]
-console.log(address)
-
 
 if (!address) {
     console.log('Please provide an address')
