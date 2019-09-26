@@ -14,6 +14,13 @@ app.get('', (req, res) => {
     res.render('index');
 });
 
+app.get('/about', (req, res) => {
+    res.render('about', {
+        title: 'About this App',
+        name : 'Mohamed Matar'
+    });
+});
+
 const address = process.argv[2]
 
 if (!address) {
