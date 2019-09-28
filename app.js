@@ -8,11 +8,10 @@ const hbs     = require('hbs');
 
 const app = express();
 
+//express configuration pathes
 const publicPath   = path.join(__dirname, 'public');
 const viewsPath    = path.join(__dirname, 'templates/views'); 
 const partialsPath = path.join(__dirname, 'templates/partials');
-
-console.log(partialsPath);
 
 app.set('view engine', 'hbs');
 app.set('views', viewsPath)
@@ -25,6 +24,16 @@ app.get('', (req, res) => {
         title: 'Weather',
         name: 'Mohamed Matar'
     });
+});
+
+app.get('/weather', (req, res) => {
+    if(!req.query.search) {
+        return res.send({
+            'error' : 'No search was provided'
+        });
+    }
+
+    getWeatherInfo(req.query.search, res);
 });
 
 app.get('/about', (req, res) => {
@@ -47,26 +56,29 @@ app.get('*', (req, res) => {
         name: 'Mohamed Matar'
     });
 })
-// const address = process.argv[2]
 
-// if (!address) {
-//     console.log('Please provide an address')
-// } else {
-//     geocode(address, (error, {latitude, longitude, location}) => {
-//         if (error) {
-//             return console.log(error)
-//         }
+function getWeatherInfo(address, res) {
+    geocode(address, (error, {latitude, longitude, location} = {}) => {
+        if (error) {
+            return res.send({
+                "error":error
+            });
+        }
 
-//         forecast(latitude, longitude, (error, forecastData) => {
-//             if (error) {
-//                 return console.log(error)
-//             }
+        forecast(latitude, longitude, (error, forecastData) => {
+            if (error) {
+                return res.send({
+                    "error":error
+                });
+            }
 
-//             console.log(location)
-//             console.log(forecastData)
-//         })
-//     })
-// }
+            res.send({
+                "loaction": location,    
+                "forecast": forecastData
+            });
+        })
+    })
+}
 
 app.listen('3000', () => {
     console.log('listening on port 3000');
