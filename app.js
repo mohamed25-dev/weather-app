@@ -21,7 +21,10 @@ hbs.registerPartials(partialsPath);
 app.use(express.static(publicPath));
 
 app.get('', (req, res) => {
-    res.render('index', {title: 'Home'});
+    res.render('index', {
+        title: 'Weather',
+        name: 'Mohamed Matar'
+    });
 });
 
 app.get('/about', (req, res) => {
@@ -32,11 +35,17 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/help', (req, res) => {
-    res.render('help', {title: 'Help'});
+    res.render('help', {
+        title: 'Help',
+        name: 'Mohamed Matar'
+    });
 })
 
 app.get('*', (req, res) => {
-    res.render('404', {errorMessage: 'Page Not Found'});
+    res.render('404', {
+        errorMessage: 'Page Not Found',
+        name: 'Mohamed Matar'
+    });
 })
 // const address = process.argv[2]
 
