@@ -35,6 +35,9 @@ app.get('/help', (req, res) => {
     res.render('help', {title: 'Help'});
 })
 
+app.get('*', (req, res) => {
+    res.render('404', {errorMessage: 'Page Not Found'});
+})
 // const address = process.argv[2]
 
 // if (!address) {
